@@ -36,8 +36,10 @@ jobs:
           echo "Extracting android-ndk to a folder ..."
           unzip ${NDK_VER}-linux.zip &> /dev/null
           echo "Get Mesa Repository ..."
-          git clone --depth 1 --branch main https://gitlab.freedesktop.org/mesa/mesa
+          git clone --depth 1 --branch 25.1.4 https://gitlab.freedesktop.org/mesa/mesa
 
+          git clone --depth1 --branch 25.1.4-1 https://github.com/yiyutonghua/mesa-build-fix.git
+          cp -rf mesa-build-fix/* mesa/
       - name: Build
         run: |
           envsubst <android-${{matrix.arch}} >build-crossfile
