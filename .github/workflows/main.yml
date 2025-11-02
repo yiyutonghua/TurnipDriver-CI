@@ -36,7 +36,7 @@ jobs:
           echo "Extracting android-ndk to a folder ..."
           unzip ${NDK_VER}-linux.zip &> /dev/null
           echo "Get Mesa Repository ..."
-          git clone --depth 1 --branch main https://gitlab.freedesktop.org/mesa/mesa
+          git clone --depth 1 --branch 25.3 https://gitlab.freedesktop.org/mesa/mesa
 
       - name: Build
         run: |
