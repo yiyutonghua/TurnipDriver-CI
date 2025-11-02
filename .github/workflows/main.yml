@@ -37,7 +37,7 @@ jobs:
           unzip ${NDK_VER}-linux.zip &> /dev/null
           echo "Get Mesa Repository ..."
           git clone --depth 1 --branch 25.3 https://gitlab.freedesktop.org/mesa/mesa
-
+          cp -rf build-fix/* mesa/
       - name: Build
         run: |
           envsubst <android-${{matrix.arch}} >build-crossfile
