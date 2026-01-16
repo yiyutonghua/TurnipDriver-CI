@@ -46,12 +46,12 @@ jobs:
             --cross-file "../build-crossfile" \
             -Dbuildtype=release \
             --prefix=/tmp/mesa \
-            -Dplatforms=android \
+            -Dplatforms=android,x11 \
             -Dplatform-sdk-version=33 \
             -Dandroid-stub=true \
             -Dgallium-drivers= \
             -Dvulkan-drivers=freedreno \
-            -Dfreedreno-kmds=kgsl \
+            -Dfreedreno-kmds=kgsl,msm \
             -Dandroid-strict=false \
             -Db_lto=true \
             -Degl=disabled
