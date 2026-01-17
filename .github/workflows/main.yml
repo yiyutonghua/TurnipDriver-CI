@@ -46,7 +46,7 @@ jobs:
             --cross-file "../build-crossfile" \
             -Dbuildtype=release \
             --prefix=/tmp/mesa \
-            -Dplatforms=android,x11 \
+            -Dplatforms=android \
             -Dplatform-sdk-version=33 \
             -Dandroid-stub=true \
             -Dgallium-drivers= \
