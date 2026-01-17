@@ -55,7 +55,7 @@ jobs:
             -Dandroid-strict=false \
             -Db_lto=true \
             -Degl=disabled \
-      -Dallow-fallback-for=libdrm,perfetto
+            -Dallow-fallback-for=libdrm,perfetto
           ninja -C "build-android" install
           mkdir /tmp/mesa/turnip
           cp /tmp/mesa/lib/libvulkan_freedreno.so /tmp/mesa/turnip/libvulkan_freedreno.so
