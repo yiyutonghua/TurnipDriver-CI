@@ -451,7 +451,6 @@ add_gpus([
         GPUId(608), # TODO: Test it, based only on libwrapfake dumps
         GPUId(610),
         GPUId(612), # TODO: Test it, based only on libwrapfake dumps
-        GPUId(613),
     ], A6xxGPUInfo(
         CHIP.A6XX,
         [a6xx_base, a6xx_gen1_low],
@@ -1017,6 +1016,7 @@ a7xx_gen2 = GPUProps(
         reading_shading_rate_requires_smask_quirk = True,
         has_ray_intersection = True,
         has_hw_bin_scaling = True,
+        has_image_processing = True,
     )
 
 a7xx_gen3 = GPUProps(
@@ -1044,6 +1044,7 @@ a7xx_gen3 = GPUProps(
         has_abs_bin_mask = True,
         new_control_regs = True,
         has_hw_bin_scaling = True,
+        has_image_processing = True,
     )
 
 a730_magic_regs = dict(
@@ -1437,6 +1438,9 @@ add_gpus([
 a8xx_base = GPUProps(
         has_dp2acc = False,
         reg_size_vec4 = 96,
+        has_rt_workaround = False,
+        supports_double_threadsize = False,
+        has_dual_wave_dispatch = True,
     )
 
 a8xx_gen2 = GPUProps(
@@ -1456,6 +1460,9 @@ a8xx_gen2 = GPUProps(
         gmem_ccu_depth_cache_fraction = CCUColorCacheFraction.FULL.value,
         gmem_per_ccu_depth_cache_size = 256 * 1024,
         has_fs_tex_prefetch = False,
+
+        # tbd if this applies to a8xx_gen1 as well:
+        has_salu_int_narrowing_quirk = True
 )
 
 # Totally fake, just to get cffdump to work:
@@ -1484,12 +1491,12 @@ add_gpus([
 # programming moves into the kernel, and what remains
 # should be easier to share between devices
 a8xx_gen2_raw_magic_regs = [
-        [A6XXRegs.REG_A8XX_GRAS_UNKNOWN_8228, 0x00000000],
-        [A6XXRegs.REG_A8XX_GRAS_UNKNOWN_8229, 0x00000000],
-        [A6XXRegs.REG_A8XX_GRAS_UNKNOWN_822A, 0x00000000],
-        [A6XXRegs.REG_A8XX_GRAS_UNKNOWN_822B, 0x00000000],
-        [A6XXRegs.REG_A8XX_GRAS_UNKNOWN_822C, 0x00000000],
-        [A6XXRegs.REG_A8XX_GRAS_UNKNOWN_822D, 0x00000000],
+        [A6XXRegs.REG_A8XX_GRAS_BIN_FOVEAT_XY_FDM_OFFSET + 0, 0x00000000],
+        [A6XXRegs.REG_A8XX_GRAS_BIN_FOVEAT_XY_FDM_OFFSET + 1, 0x00000000],
+        [A6XXRegs.REG_A8XX_GRAS_BIN_FOVEAT_XY_FDM_OFFSET + 2, 0x00000000],
+        [A6XXRegs.REG_A8XX_GRAS_BIN_FOVEAT_XY_FDM_OFFSET + 3, 0x00000000],
+        [A6XXRegs.REG_A8XX_GRAS_BIN_FOVEAT_XY_FDM_OFFSET + 4, 0x00000000],
+        [A6XXRegs.REG_A8XX_GRAS_BIN_FOVEAT_XY_FDM_OFFSET + 5, 0x00000000],
 
         [A6XXRegs.REG_A6XX_RB_UNKNOWN_8818,   0x00000000],
         [A6XXRegs.REG_A6XX_RB_UNKNOWN_8819,   0x00000000],
@@ -1501,7 +1508,7 @@ a8xx_gen2_raw_magic_regs = [
         [A6XXRegs.REG_A7XX_RB_LRZ_CNTL2,      0x00000000],
         [A6XXRegs.REG_A8XX_RB_RESOLVE_CNTL_5, 0x00000001],
 
-        [A6XXRegs.REG_A7XX_SP_UNKNOWN_AB01,   0x00000001],
+        [A6XXRegs.REG_A7XX_SP_UNKNOWN_AB01,   0x00000000],
         [A6XXRegs.REG_A7XX_SP_HLSQ_MODE_CNTL, 0x00000000],
         [A6XXRegs.REG_A8XX_SP_UNKNOWN_AB23,   0x00000000],
 
@@ -1518,7 +1525,8 @@ add_gpus([
         GPUId(chip_id=0xffff44050A31, name="Adreno (TM) 840"),
     ], A6xxGPUInfo(
         CHIP.A8XX,
-        [a7xx_base, a7xx_gen3, a8xx_base, a8xx_gen2],
+        [a7xx_base, a7xx_gen3, a8xx_base, a8xx_gen2,
+         GPUProps(shading_rate_matches_vk = True)],
         num_ccu = 6,
         num_slices = 3,
         tile_align_w = 96,
@@ -1623,4 +1631,3 @@ fd_dev_info_apply_dbg_options(struct fd_dev_info *info)
 """
 
 print(Template(template).render(s=s, unique_props=GPUProps.unique_props))
-
