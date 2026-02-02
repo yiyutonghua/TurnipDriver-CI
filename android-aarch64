@@ -1,10 +1,8 @@
 [binaries]
 ndk = '${WORK_DIR}/${NDK_VER}' + '/toolchains/llvm/prebuilt/linux-x86_64/bin'
 ar = ndk + '/llvm-ar'
-c = ['ccache', ndk + '/aarch64-linux-android${SDK_VER}-clang', '-pipe','-O3','-flto']
-cpp = ['ccache', ndk + '/aarch64-linux-android${SDK_VER}-clang++', '-fno-exceptions', '-fno-unwind-tables', '-fno-asynchronous-unwind-tables', '--start-no-unused-arguments', '-static-libstdc++', '--end-no-unused-arguments', '-Wno-c++11-narrowing', '-pipe','-O3','-flto']
-#c_ld = ndk + '/ld.lld -O3 -pipe -flto'
-#cpp_ld = ndk + '/ld.lld -O3 -pipe -flto'
+c = ['ccache', ndk + '/aarch64-linux-android${SDK_VER}-clang', '-pipe','-O3']
+cpp = ['ccache', ndk + '/aarch64-linux-android${SDK_VER}-clang++', '-fno-exceptions', '-fno-unwind-tables', '-fno-asynchronous-unwind-tables', '--start-no-unused-arguments', '-static-libstdc++', '--end-no-unused-arguments', '-Wno-c++11-narrowing', '-pipe','-O3']
 strip = ndk + '/aarch64-linux-android-strip'
 pkgconfig = ['env', 'PKG_CONFIG_LIBDIR=.', '/usr/bin/pkg-config']
 [host_machine]
